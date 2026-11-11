@@ -1,0 +1,15 @@
+{
+  "name": "ajmerfoodie",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AjmerFoodie — Official Creator Landing & Collaboration Portal for Dr. Shikha Mathur",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
