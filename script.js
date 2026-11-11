@@ -4,10 +4,23 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Current Year
+  // 1. Dynamic Current Year & Auto-Updating Quarter/Year Collaboration Banner
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentQuarter = Math.floor(now.getMonth() / 3) + 1;
+
   const yearEl = document.getElementById('currentYear');
   if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
+    yearEl.textContent = currentYear;
+  }
+
+  const collabPeriodEl = document.getElementById('collabPeriod');
+  if (collabPeriodEl) {
+    // In Q1–Q3: "Q1 2027 & Q2 2027", "Q2 2027 & Q3 2027", "Q3 2027 & Q4 2027"
+    // In Q4:    "Q4 2026 & 2027"
+    collabPeriodEl.textContent = currentQuarter < 4
+      ? `Q${currentQuarter} ${currentYear} & Q${currentQuarter + 1} ${currentYear}`
+      : `Q4 ${currentYear} & ${currentYear + 1}`;
   }
 
   // 2. Mobile Navigation Toggle
