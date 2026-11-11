@@ -57,6 +57,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -65,10 +66,12 @@ body {
   color: var(--text-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  padding-bottom: 72px; /* space for mobile bar */
+  overflow-x: hidden;
+  width: 100%;
+  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); /* space for mobile bar */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   body {
     padding-bottom: 0;
   }
@@ -156,12 +159,21 @@ a {
 }
 
 .brand-logo {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.5px;
+  line-height: 1.08;
+  gap: 3px;
   color: var(--text-dark);
+  flex-shrink: 0;
+}
+
+.logo-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
 }
 
 .logo-accent {
@@ -169,12 +181,13 @@ a {
 }
 
 .doctor-badge {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--color-gold);
-  letter-spacing: 1.5px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
-  margin-top: -3px;
+  line-height: 1.15;
+  white-space: nowrap;
 }
 
 .nav-menu {
@@ -216,6 +229,7 @@ a {
   border: none;
   cursor: pointer;
   padding: 0.5rem;
+  z-index: 1002;
 }
 
 .mobile-toggle span {
@@ -224,7 +238,20 @@ a {
   height: 2px;
   background-color: var(--text-dark);
   margin: 5px 0;
-  transition: var(--transition-fast);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.mobile-toggle.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-toggle.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* ===================================================================
@@ -485,9 +512,9 @@ a {
 
 .verified-tag {
   position: absolute;
-  bottom: 1rem;
+  top: 1rem;
   left: 1rem;
-  top: auto;
+  bottom: auto;
   background: rgba(20, 18, 16, 0.85);
   backdrop-filter: blur(10px);
   color: #FFFFFF;
@@ -507,6 +534,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   background: var(--color-bg-surface);
   border-top: 1px solid var(--border-soft);
 }
@@ -514,6 +542,7 @@ a {
 .influencer-handle {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .handle-name {
@@ -530,6 +559,7 @@ a {
 .handle-social-icons {
   display: flex;
   gap: 0.6rem;
+  flex-shrink: 0;
 }
 
 .icon-bubble {
@@ -558,28 +588,29 @@ a {
 /* Floating Badges */
 .floating-badge {
   position: absolute;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
-  padding: 0.75rem 1.1rem;
-  border-radius: 18px;
+  padding: 0.7rem 1.05rem;
+  border-radius: 16px;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-soft);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  z-index: 2;
+  gap: 0.7rem;
+  z-index: 3;
   animation: floatSubtle 4s ease-in-out infinite alternate;
 }
 
 .badge-top-right {
   top: auto;
-  bottom: 120px;
-  right: -24px;
+  bottom: 172px;
+  right: -14px;
 }
 
 .badge-bottom-left {
-  bottom: 25px;
-  left: -28px;
+  top: auto;
+  bottom: 98px;
+  left: -14px;
   animation-delay: 2s;
 }
 
@@ -955,12 +986,15 @@ a {
 .demo-label-row {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
   font-size: 0.9rem;
   color: var(--text-body);
 }
 
 .demo-label-row strong {
   color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 .progress-bar {
@@ -1191,6 +1225,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   border-top: 1px solid var(--border-soft);
   padding-top: 1rem;
   font-size: 0.88rem;
@@ -1267,6 +1303,7 @@ a {
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .package-header {
@@ -1378,6 +1415,11 @@ a {
   gap: 1.1rem;
 }
 
+.contact-card-item > div:last-child {
+  min-width: 0;
+  flex: 1;
+}
+
 .contact-card-item .c-icon {
   font-size: 1.5rem;
   background: rgba(255, 255, 255, 0.1);
@@ -1400,7 +1442,8 @@ a {
 .c-link-row {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.75rem;
   margin-top: 0.2rem;
 }
 
@@ -1408,6 +1451,7 @@ a {
   font-size: 1.05rem;
   font-weight: 600;
   color: #FFFFFF;
+  word-break: break-word;
 }
 
 .c-link-row a:hover {
@@ -1847,18 +1891,39 @@ a {
 /* ===================================================================
    RESPONSIVE BREAKPOINTS
    =================================================================== */
+@media (max-width: 1140px) {
+  .nav-menu {
+    gap: 1.15rem;
+  }
+
+  .nav-link {
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .nav-cta.btn {
+    padding: 0.65rem 1.15rem;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 
+  .hero-content {
+    min-width: 0;
+  }
+
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 2.75rem;
   }
 
   .profile-card-wrapper {
-    max-width: 400px;
+    max-width: 420px;
   }
 
   .metrics-cards-grid,
@@ -1889,90 +1954,516 @@ a {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .mobile-toggle {
     display: block;
   }
 
   .nav-menu {
-    position: fixed;
-    top: 72px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    background: #FAF7F2;
+    background: rgba(250, 247, 242, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     flex-direction: column;
-    padding: 2rem;
-    gap: 1.2rem;
+    align-items: stretch;
+    padding: 1.5rem;
+    gap: 0.4rem;
     border-bottom: 1px solid var(--border-soft);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-150%);
-    transition: transform var(--transition-smooth);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    z-index: 1001;
   }
 
   .nav-menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
     transform: translateY(0);
   }
 
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.7rem 0.5rem;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  .nav-cta.btn {
+    margin-top: 0.6rem;
+    width: 100%;
+    padding: 0.85rem 1.4rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.15rem;
+  }
+
+  /* Compact Announcement Bar */
+  .top-announcement {
+    padding: 0.45rem 0;
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  .announcement-content {
+    justify-content: center;
+    text-align: center;
+    gap: 0.35rem 0.65rem;
+  }
+
+  .badge-pulse {
+    display: inline;
+  }
+
+  .quick-inquire-link {
+    display: inline-block;
+    background: rgba(252, 211, 77, 0.16);
+    color: #FCD34D;
+    text-decoration: none;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+
+  /* Header & Brand Logo */
+  .header-container {
+    height: 64px;
+  }
+
+  .brand-logo {
+    font-size: 1.35rem;
+    gap: 2px;
+  }
+
+  .doctor-badge {
+    font-size: 0.63rem;
+    letter-spacing: 1.15px;
+  }
+
+  /* Hero Section Mobile Optimization */
+  .hero-section {
+    padding: 1.75rem 0 2.75rem;
+  }
+
+  .hero-grid {
+    gap: 2rem;
+  }
+
+  .hero-badges {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .chip {
+    font-size: 0.74rem;
+    padding: 0.3rem 0.7rem;
+  }
+
   .hero-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.85rem, 7vw, 2.35rem);
+    line-height: 1.18;
+    margin-bottom: 1rem;
   }
 
   .hero-subtext {
-    font-size: 1rem;
+    font-size: 0.96rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
   }
 
+  /* 2x2 Grid for Hero Stats on Mobile -> Zero Overflow */
   .hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     width: 100%;
-    justify-content: space-around;
-    padding: 0.9rem 1rem;
+    padding: 1rem;
+    gap: 0.85rem;
+    margin-bottom: 1.6rem;
+    border-radius: 18px;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  .mini-stat {
+    background: var(--color-bg-base);
+    padding: 0.75rem 0.6rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-soft);
   }
 
   .stat-num {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 
+  .stat-label {
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+  }
+
+  /* Full-width Thumb-Friendly CTA Buttons */
+  .hero-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .direct-contact-tags {
+    justify-content: center;
+    gap: 0.6rem 1.2rem;
+    font-size: 0.82rem;
+  }
+
+  /* Hero Profile Card & Non-Overlapping Badges Grid on Mobile */
+  .profile-card-wrapper {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .profile-card {
+    grid-column: 1 / -1;
+    border-radius: 22px;
+  }
+
+  .profile-card-footer {
+    padding: 1rem 1.15rem;
+  }
+
+  .handle-name {
+    font-size: 1.05rem;
+  }
+
+  .handle-role {
+    font-size: 0.78rem;
+  }
+
+  .floating-badge {
+    position: static;
+    animation: none;
+    padding: 0.65rem 0.75rem;
+    border-radius: 14px;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+  }
+
+  .floating-badge .icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .floating-badge .badge-text {
+    min-width: 0;
+  }
+
+  .floating-badge strong {
+    font-size: 0.78rem;
+    line-height: 1.2;
+  }
+
+  .floating-badge small {
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+
+  /* Trust Banner */
+  .trust-banner {
+    padding: 1.35rem 0;
+  }
+
+  .trust-label {
+    font-size: 0.7rem;
+    letter-spacing: 1.3px;
+    margin-bottom: 0.85rem;
+  }
+
+  .trust-logos-row {
+    gap: 0.55rem;
+  }
+
+  .trust-pill {
+    font-size: 0.76rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  /* Section Spacing & Headers */
+  .about-section,
+  .metrics-section,
+  .services-section,
+  .portfolio-section,
+  .packages-section,
+  .inquiry-section,
+  .faq-section {
+    padding: 3.5rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 2.2rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.65rem, 6vw, 2.1rem);
+  }
+
+  .section-subtitle {
+    font-size: 0.94rem;
+  }
+
+  /* About Section */
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
-  .metrics-cards-grid,
-  .services-grid,
-  .portfolio-grid {
-    grid-template-columns: 1fr;
+  .about-headline {
+    font-size: 1.6rem;
+  }
+
+  .about-text-content .paragraph {
+    font-size: 0.96rem;
+  }
+
+  .why-brands-trust {
+    padding: 1.35rem;
+    border-radius: 16px;
+  }
+
+  .img-caption {
+    font-size: 0.75rem;
+    padding: 1.2rem 0.85rem 0.65rem;
+  }
+
+  /* Metrics & Demographics */
+  .metrics-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    padding: 1.35rem 1.1rem;
+    border-radius: 18px;
+  }
+
+  .metric-icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    margin-bottom: 0.9rem;
+  }
+
+  .metric-icon-wrap svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .metric-value {
+    font-size: 1.65rem;
+  }
+
+  .metric-title {
+    font-size: 0.92rem;
+  }
+
+  .metric-sub {
+    font-size: 0.78rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .metric-link,
+  .metric-tag {
+    font-size: 0.74rem;
+  }
+
+  .demographics-box {
+    padding: 1.5rem 1.25rem;
+    border-radius: 18px;
+  }
+
+  .demographics-title {
+    font-size: 1.12rem;
+    margin-bottom: 1.25rem;
   }
 
   .demo-bars-grid {
     grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .demo-label-row {
+    font-size: 0.82rem;
+  }
+
+  /* Services & Portfolio */
+  .services-grid,
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .service-card {
+    padding: 1.6rem 1.35rem;
+    border-radius: 18px;
+  }
+
+  .portfolio-tabs {
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .tab-btn {
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+  }
+
+  .portfolio-details {
+    padding: 1.25rem;
+  }
+
+  .portfolio-details h4 {
+    font-size: 1.12rem;
+  }
+
+  /* Packages */
+  .package-card {
+    padding: 2rem 1.4rem;
+    border-radius: 20px;
+  }
+
+  .package-tier-name {
+    font-size: 1.45rem;
+  }
+
+  /* Inquiry Box & Form */
+  .inquiry-box-wrapper {
+    border-radius: 22px;
+  }
+
+  .inquiry-info-pane,
+  .inquiry-form-pane {
+    padding: 1.85rem 1.35rem;
+  }
+
+  .inquiry-headline {
+    font-size: 1.75rem;
+  }
+
+  .inquiry-sub {
+    font-size: 0.9rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .contact-card {
     gap: 1.2rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .c-link-row a {
+    font-size: 0.95rem;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
   }
 
   .form-row,
   .form-actions {
     grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
 
-  .inquiry-info-pane,
-  .inquiry-form-pane {
-    padding: 2rem 1.5rem;
+  /* Prevent iOS Safari zoom on input focus */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 1rem;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .form-submit-btn.btn-large {
+    padding: 0.88rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* FAQ */
+  .accordion-header {
+    padding: 1.15rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .accordion-body {
+    padding: 0 1.25rem 1.15rem;
+    font-size: 0.88rem;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 3rem 0 1.5rem;
   }
 
   .footer-top-row {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.8rem;
+    margin-bottom: 2rem;
   }
 
   .footer-bottom-row {
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.6rem;
     text-align: center;
+    padding-top: 1.4rem;
   }
 
+  /* Sticky Mobile Bar & Toast Positioning */
   .mobile-action-bar {
     display: flex;
+    padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom, 0px));
   }
 
-  .floating-badge {
-    display: none; /* remove clutter on small screens */
+  .toast-notice {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    left: 1rem;
+    right: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .metrics-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .pill-chip span,
+  .check-chip span {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.75rem;
   }
 }
